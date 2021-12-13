@@ -1,10 +1,25 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <my-header />
+  <div id="content">  
+    <router-view />
   </div>
-  <router-view />
+  <my-footer />
 </template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
+
+export default defineComponent({
+  name: "App",
+  components: {
+    myHeader: Header,
+    myFooter: Footer
+  }
+  
+});
+</script>
 
 <style lang="scss">
 #app {
@@ -13,18 +28,14 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  display: flex;
+  flex-direction: column;
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+#content {
+  background: rgb(253, 253, 253);
+  min-height: 100vh;
+  z-index: -1;
 }
+
 </style>

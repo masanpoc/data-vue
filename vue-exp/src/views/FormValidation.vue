@@ -1,6 +1,7 @@
 <template>
-  <div class="home">
-    <h2>Home with router links and small description</h2>
+  <div class="contact">
+    <h1>Form</h1>
+    
   </div>
 </template>
 
@@ -8,9 +9,12 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "Home",
+  name: "FormValidation",
   components: {
-    
-  },
+  }, 
+  data() {
+    return {
+    };
+  }
 });
 </script>
