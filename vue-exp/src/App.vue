@@ -35,7 +35,6 @@ export default defineComponent({
 #content {
   background: rgb(253, 253, 253);
   min-height: 100vh;
-  z-index: -1;
 }
 
 </style>

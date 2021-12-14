@@ -27,6 +27,7 @@ export default defineComponent({
   padding: 30px 30px 30px 0;
   font-size: 0.8rem;
   box-shadow: 0px 0px 5px 0px rgba(182, 182, 182, 0.75);
+  z-index: 2;
   a {
     font-weight: bold;
     color: #2c3e50;
