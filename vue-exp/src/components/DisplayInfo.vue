@@ -43,14 +43,15 @@ export default defineComponent({
   data() {
     return {
       infoList: this.info,
-      newItem: '',
-      numStrs: 0
+      newItem: '' as string,
+      numStrs: {'str1':0} as Record<string, number>
     }
   },
   methods: {
     addStr() {
       if(this.newItem){
         this.infoList.push(this.newItem);
+        this.numStrs = Object.assign(this.numStrs, {[this.newItem]: 0});
         this.newItem='';
       }
     },
@@ -91,14 +92,14 @@ export default defineComponent({
       const parent = node.parentElement;
       const collectionNodes = parent!.getElementsByTagName('h1');
       if(collectionNodes.length>15){
-        const buttonList = document.getElementById("buttons");
-        this.numStrs=this.numStrs+1;
-        if(this.numStrs==1){
-          console.log(buttonList!.clientHeight);
+        const buttonList = parent!.nextElementSibling as HTMLElement;
+        // we change height when we add first elemnt to new row, counter starts at 0
+        this.numStrs[el]=this.numStrs[el]+1;
+        if(this.numStrs[el]==1){ 
           buttonList!.style.height=buttonList!.clientHeight+40+'px';
         }
-        if(this.numStrs==3){
-          this.numStrs=0;
+        if(this.numStrs[el]==3){
+          this.numStrs[el]=0;
         }
       } 
     },
