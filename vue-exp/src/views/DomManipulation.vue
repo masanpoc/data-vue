@@ -1,7 +1,10 @@
 <template>
-  <div class="contact">
-    <h1>List</h1>
-    <display-info :info="trArr" />
+  <div id="layout">
+    <div class="row" >
+      <h1 :style="{'text-decoration': 'underline'}">List</h1>
+      <button @click="toggleClass" >{{hide ? 'Show list' : 'Hide list'}}</button>
+    </div>
+    <display-info :info="trArr" :hide="hide" />
   </div>
 </template>
 
@@ -17,7 +20,31 @@ export default defineComponent({
   data() {
     return {
       trArr: ['str1'],
+      hide: false,
     };
+  },
+  methods: {
+    toggleClass() {
+      this.hide = !this.hide
+    },
   }
 });
 </script>
+
+<style lang="scss" scoped>
+  #layout {
+    margin: 100px auto 150px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: max-content;
+  }
+  .row {
+    width: 500px;
+    display: flex;
+    margin-bottom: 60px;
+    :first-child {
+      margin-right: 50px;
+    }
+  }
+</style>

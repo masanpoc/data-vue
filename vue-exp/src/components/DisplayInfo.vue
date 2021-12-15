@@ -1,23 +1,28 @@
 <template>
-  <div class="info">
-    
-    <button @click="toggleClass" >{{hide ? 'Show list' : 'Hide list'}}</button>
-    <template v-if="!hide">
-      <input type="text" v-model="newItem" placeholder="insert new str"  @keyup.enter="addStr" />
-      <button @click="addStr"  >Add</button>
-      <div v-for="(string) in infoList" :key="string">
-          <h1 :id="string">{{ string }}</h1>
-          <button @click="underline(string)" >Add/Remove Underline</button>
-          <button @click="colorize(string)" >Change colors of all strings</button>
-          <button @click="abbreviate(string)" >Abbreviate</button>
-          <button @click="copy(string)" >Make a copy</button>
-          <button @click="removeLast(string)" >Remove last copy</button>
-          <button @click="removeCopies(string)" >Remove all copies</button>
-          <button @click="removeParentNode(string)" >Remove All</button>
-          <button @click="addRemoveClass(string)" >Add/Remove .red class</button>
-          <button @click="startAnimation(string)" >Start CSS Animation</button>
+  <div v-show="!hide" class="info">
+      <div id="input-wrapper">
+        <input type="text" v-model="newItem" placeholder="insert short str"  @keyup.enter="addStr" />
+        <button @click="addStr"  >Add</button>
       </div>
-    </template>
+      
+      <div id="wrapper" class="column">
+        <div id="string-block" class="row" v-for="(string) in infoList" :key="string">
+            <div id="string-list">
+              <h1 class="animated" :id="string">{{ string }}</h1>
+            </div>
+            <div id="buttons" class="column">
+              <button @click="underline(string)" >Add/Remove Underline</button>
+              <button @click="colorize(string)" >Change colors of all strings</button>
+              <button @click="abbreviate(string)" >Abbreviate</button>
+              <button @click="copy(string)" >Make a copy</button>
+              <button @click="removeLast(string)" >Remove last copy</button>
+              <button @click="removeCopies(string)" >Remove all copies</button>
+              <button @click="removeParentNode(string)" >Remove All</button>
+              <button @click="addRemoveClass(string)" >Add/Remove .red class</button>
+              <button @click="startAnimation(string)" >Stop/Restart CSS Animation</button>
+            </div>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -31,18 +36,18 @@ export default defineComponent({
       type: Array as PropType<Array<string>>,
       required: true
     },
+    hide: {
+      type: Boolean
+    }
   },
   data() {
     return {
-      hide: true,
       infoList: this.info,
-      newItem: ''
+      newItem: '',
+      numStrs: 0
     }
   },
   methods: {
-    toggleClass() {
-      this.hide = !this.hide
-    },
     addStr() {
       if(this.newItem){
         this.infoList.push(this.newItem);
@@ -79,7 +84,23 @@ export default defineComponent({
       const copy = document.createElement("H1");   // Create a <h1> element
       copy.innerHTML = node.innerHTML;
       copy.style.color=node.style.color;
-      node.parentNode!.insertBefore(copy, node.nextSibling);  
+      node.parentNode!.appendChild(copy); 
+      
+      // set height of buttons list to be responsive (flex grow set in items, but we need to update our height 
+      // as it is not possible to set the height based on the height of the container parent (auto))
+      const parent = node.parentElement;
+      const collectionNodes = parent!.getElementsByTagName('h1');
+      if(collectionNodes.length>15){
+        const buttonList = document.getElementById("buttons");
+        this.numStrs=this.numStrs+1;
+        if(this.numStrs==1){
+          console.log(buttonList!.clientHeight);
+          buttonList!.style.height=buttonList!.clientHeight+40+'px';
+        }
+        if(this.numStrs==3){
+          this.numStrs=0;
+        }
+      } 
     },
     removeLast(el:string) {
       const node = document.getElementById(el)!;
@@ -102,7 +123,7 @@ export default defineComponent({
     removeParentNode(el:string) {
       const node = document.getElementById(el)!;
       if(node){
-        node.parentElement!.remove();
+        node.parentElement!.parentElement!.remove();
       }
     },
     addRemoveClass(el:string) {
@@ -116,6 +137,13 @@ export default defineComponent({
     },
     startAnimation(el:string){
       const node = document.getElementById(el)!;
+      if(!node.classList.contains('animated')){
+          node.classList.add('animated');
+      }
+      else {
+          node.classList.remove('animated');
+      }
+       
     }
   }, 
 });
@@ -123,7 +151,86 @@ export default defineComponent({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.red{
-  background: red;
+@mixin centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+
+  #input-wrapper {
+    display: flex;
+    margin-bottom: 40px;
+  }
+
+  #wrapper {
+    >*{
+      border: 1px solid black;
+      margin-bottom: 40px;
+    }
+    :last-child {
+      margin-bottom: 0;
+    }
+    #string-block {
+      #string-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      #buttons {
+            height: 200px;
+            border: 1px solid red;
+            >* {
+              width: 100%;
+              flex-grow: 1;
+            }
+      }
+    }
+    
+  }
+}
+
+/* general classes */
+  .red{
+    background: red;
+  }
+ .animated {
+    width: 100px;
+    position: relative;
+    animation-duration: 3s;
+    animation-name: moving;
+    animation-iteration-count: infinite;
+  }
+  @keyframes moving {
+    0% {
+      left: 0;
+    }
+    33% {
+      left: 5px;
+    }
+    66% {
+      left: 2.5px;
+    }
+    100% {
+      left: 0;
+    }
+  }
+  .row {
+    @include centered;
+    flex-direction: row;
+    
+  }
+  .column {
+      @include centered();
+      flex-direction: column;
+    }
+
+ 
 </style>
