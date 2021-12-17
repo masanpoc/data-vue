@@ -6,7 +6,7 @@
       </div>
       
       <div id="wrapper" class="column">
-        <div id="string-block" class="row" v-for="(string) in infoList" :key="string">
+        <div id="string-block" class="row" v-for="(string) of infoList" :key="string">
             <div id="string-list">
               <h1 class="animated" :id="string">{{ string }}</h1>
             </div>
@@ -91,6 +91,7 @@ export default defineComponent({
       // as it is not possible to set the height based on the height of the container parent (auto))
       const parent = node.parentElement;
       const collectionNodes = parent!.getElementsByTagName('h1');
+      
       if(collectionNodes.length>15){
         const buttonList = parent!.nextElementSibling as HTMLElement;
         // we change height when we add first elemnt to new row, counter starts at 0
@@ -107,19 +108,38 @@ export default defineComponent({
       const node = document.getElementById(el)!;
       const parent = node.parentElement;
       const collectionNodes = parent!.getElementsByTagName('h1');
+
+      // logic to update height
+      if(collectionNodes.length>15){
+        const buttonList = parent!.nextElementSibling as HTMLElement;
+        if(this.numStrs[el]==1){ 
+          buttonList!.style.height=buttonList!.clientHeight-40+'px';
+        }
+        this.numStrs[el]=this.numStrs[el]-1;
+        if(this.numStrs[el]==-1){
+          this.numStrs[el]=2;
+        }
+      } 
+
       const nodeRemoving = collectionNodes[collectionNodes.length-1];
       if(!nodeRemoving.id){
         nodeRemoving.remove();
       }
+      
     },
     removeCopies(el:string) {
       const node = document.getElementById(el)!;
       const parent = node.parentElement;
       const collectionNodes = parent!.getElementsByTagName('h1');
+      
       while(collectionNodes.length>1){
         const nodeRemoving = collectionNodes[1];
         nodeRemoving.remove();
       }
+
+      // logic to update height
+      const buttonList = parent!.nextElementSibling as HTMLElement;
+      buttonList!.style.height='200px';
     },
     removeParentNode(el:string) {
       const node = document.getElementById(el)!;
@@ -172,7 +192,7 @@ export default defineComponent({
   }
 
   #wrapper {
-    >*{
+    & > * {
       border: 1px solid black;
       margin-bottom: 40px;
     }
@@ -188,7 +208,7 @@ export default defineComponent({
       #buttons {
             height: 200px;
             border: 1px solid red;
-            >* {
+            & > * {
               width: 100%;
               flex-grow: 1;
             }

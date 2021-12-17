@@ -8,6 +8,7 @@
         <li><a href="https://axios-http.com/docs/intro" target="_blank" rel="noreferrer" >Axios</a></li>
         <li><a href="https://next.vue-test-utils.vuejs.org/guide/" target="_blank" rel="noreferrer" >Vue Test Utils</a></li>
         <li><a href="https://www.cypress.io/blog/2021/04/06/getting-start-with-cypress-component-testing-vue-2-3/" target="_blank" rel="noreferrer" >Cypress</a></li>
+        <li><a href="https://vuelidate-next.netlify.app/" target="_blank" rel="noreferrer" >Vuelidate</a></li>
     </ul>
   </div>
 </template>
@@ -39,10 +40,10 @@ export default defineComponent({
         width: 50%;
         margin: 0 5%;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         gap: 15px 5px;
         justify-items: start;
-        >* {
+        & > * {
             list-style: none;
         }
     }
