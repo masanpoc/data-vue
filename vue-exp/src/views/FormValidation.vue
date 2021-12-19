@@ -1,10 +1,7 @@
 <template>
   <div id="formBlock">
-    <h1>Form</h1>
-    <div class="row">
-      <purchase-form></purchase-form>
-      <div>Basket Summary here</div>
-    </div>
+    <h1 id="heading"><u>Form</u></h1>
+    <purchase-form></purchase-form>
   </div>
 </template>
 
@@ -16,7 +13,7 @@ import PurchaseForm from '@/components/PurchaseForm.vue';
 export default defineComponent({
   name: "FormValidation",
   components: {
-    PurchaseForm
+    PurchaseForm,
   }, 
   
   
@@ -25,17 +22,16 @@ export default defineComponent({
 
 
 <style lang="scss" scoped>
-  .row {
-    display: flex;
-  }
+  
   #formBlock {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    #basketImg {
-      height: auto;
-      width: 30%;
+    align-items: flex-start;
+    width: max-content;
+    margin: 100px auto 200px auto;
+    #heading {
+      margin-bottom: 60px;
     }
   }
 

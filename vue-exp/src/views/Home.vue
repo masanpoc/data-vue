@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div id="homeBlock">
     <h2>Home with router links and small description</h2>
   </div>
 </template>
@@ -14,3 +14,14 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+  #homeBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: max-content;
+    margin: 100px auto 200px auto;
+  }
+</style>

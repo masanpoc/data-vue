@@ -1,5 +1,5 @@
 <template>
-  <div id="layout">
+  <div id="domBlock">
     <div class="row" >
       <h1 :style="{'text-decoration': 'underline'}">List</h1>
       <button @click="toggleClass" >{{hide ? 'Show list' : 'Hide list'}}</button>
@@ -32,8 +32,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-  #layout {
-    margin: 100px auto 150px auto;
+  #domBlock {
+    margin: 100px auto 200px auto;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -43,7 +43,7 @@ export default defineComponent({
     width: 500px;
     display: flex;
     margin-bottom: 60px;
-    :first-child {
+    & > :first-child {
       margin-right: 50px;
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="contact">
+  <div id="mediaBlock">
     <h1>Gallery</h1>
     <counter :count="counter" @increment="increment" @decrement="decrement" />
     <image-list :numImages="counter"  />
@@ -36,3 +36,14 @@ export default defineComponent({
   }
 });
 </script>
+
+<style lang="scss" scoped>
+  #mediaBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: max-content;
+    margin: 100px auto 200px auto;
+  }
+</style>

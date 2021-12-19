@@ -8,7 +8,7 @@
       <div id="wrapper" class="column">
         <div id="string-block" class="row" v-for="(string) of infoList" :key="string">
             <div id="string-list">
-              <h1 class="animated" :id="string">{{ string }}</h1>
+              <h1 class="animated string-item" :id="string">{{ string }}</h1>
             </div>
             <div id="buttons" class="column">
               <button @click="underline(string)" >Add/Remove Underline</button>
@@ -223,11 +223,13 @@ export default defineComponent({
     background: red;
   }
  .animated {
-    width: 100px;
     position: relative;
     animation-duration: 3s;
     animation-name: moving;
     animation-iteration-count: infinite;
+  }
+  .string-item {
+    width: 100px;
   }
   @keyframes moving {
     0% {
