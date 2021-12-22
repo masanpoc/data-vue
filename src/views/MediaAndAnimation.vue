@@ -1,21 +1,21 @@
 <template>
   <div id="mediaBlock">
-    <h1>Gallery</h1>
-    <counter :count="counter" @increment="increment" @decrement="decrement" />
+    <h1 id="heading"><u>Gallery</u></h1>
+    <!-- <counter :count="counter" @increment="increment" @decrement="decrement" /> -->
     <image-list :numImages="counter"  />
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts"> 
 import { defineComponent } from "vue";
 import ImageList from "@/components/Contact/ImageList.vue";
-import Counter from "@/components/Contact/Counter.vue";
+// import Counter from "@/components/Contact/Counter.vue";
 
 export default defineComponent({
   name: "MediaAndAnimation",
   components: {
     ImageList,
-    Counter
+    // Counter
   }, 
   data() {
     return {
@@ -45,5 +45,8 @@ export default defineComponent({
     align-items: flex-start;
     width: max-content;
     margin: 100px auto 200px auto;
+    #heading {
+      margin-bottom: 60px;
+    }
   }
 </style>

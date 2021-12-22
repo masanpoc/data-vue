@@ -176,8 +176,8 @@
       <hr />
 
       <div id="buttonsList">
-        <button type="submit" class="button-style">Complete Order</button>
-        <button type="button" class="button-style" >Cancel</button>
+        <button type="submit" class="styled-button">Complete Order</button>
+        <button type="button" class="styled-button" >Cancel</button>
       </div>
   </form>
 </template>
@@ -190,7 +190,7 @@ import { required, email, sameAs, numeric, alpha, alphaNum, minLength } from '@v
 const isPhoneNumber = (value:string) => value.length==9;
 const isZipCode = (value:string) => value.length==5;
 const isCardNumber = (value:string) => value.length==16;
-const isCardExpiration = (value:string) => value.length==4;
+const isCardExpiration = (value:string) => value.length==5;
 const isCardCode = (value:string) => value.length==3;
 
 
@@ -222,12 +222,10 @@ export default defineComponent({
     return {
       firstName: {
         required, 
-        alpha,
         minLength: minLength(2)
       },
       lastName: {
         required,
-        alpha,
         minLength: minLength(2)
       },
       email: {
@@ -244,11 +242,9 @@ export default defineComponent({
       },
       address: {
         required, 
-        alphaNum,
       },
       city: {
         required, 
-        alpha,
       },
       zipCode: {
         required, 
@@ -257,7 +253,6 @@ export default defineComponent({
       },
       country: {
         required, 
-        alpha
       },
       cardNumber: {
         required,
@@ -265,12 +260,10 @@ export default defineComponent({
         isCardNumber
       },
       cardName: {
-        required, 
-        alpha
+        required,
       },
       cardExpiration: {
         required, 
-        numeric,
         isCardExpiration
       },
       cardCode: {
@@ -396,7 +389,7 @@ export default defineComponent({
         display: flex;
         justify-content: flex-start;
         margin-top: 50px;
-        .button-style {
+        .styled-button {
           padding: 10px 20px;
           border: none;
           box-shadow: 0 0 1px 0px rgb(0, 0, 0);
