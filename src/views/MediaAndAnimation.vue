@@ -47,6 +47,7 @@ export default defineComponent({
     margin: 100px auto 200px auto;
     #heading {
       margin-bottom: 60px;
+      
     }
   }
 </style>
