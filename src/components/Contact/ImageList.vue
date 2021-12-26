@@ -58,7 +58,7 @@ export default defineComponent({
     async getImages() {
       try {
         this.loaded=false;
-        const response = await axios.get(`https://api.unsplash.com/search/photos?page=${this.page}&query=office&client_id=${process.env.VUE_APP_UNSPLASH_ACCESS_KEY}`);
+        const response = await axios.get(`https://api.unsplash.com/search/photos?page=${this.page}&query=office&client_id=1e-LeDuraaNbPTiwqFaQz6yB6Ug2if84H0B4FsiJ9RE`);
         let nestedResultsArr = response.data.results;
         let extractedResultsArr = nestedResultsArr.map((el:Response)=>{
           return {
