@@ -1,16 +1,17 @@
 <template>
     <div id="imageList" class="info" v-if="numImages > 0 && loaded">
-        
-          <!-- <img src="@/assets/Contact/office.jpg" class="img" :class="mountedImg && 'animated'" key="office" /> -->
           <template v-for="set of loadedImages">
-            <div :id="index" class="styled-img-container hovered-container" v-for="(image, index) of set" 
+            <div :id="image.url" class="styled-img-container hovered-container" v-for="(image, index) of set" 
               :key="image.url" @click="zoomIn" 
             >
               <img  :src="image.url" class="styled-img  animated"
-                :style="{animationDelay: (index*0.15)+'s'}" 
+                :style="{animationDelay: ((index+set*10)*0.15)+'s'}" 
               
               />
-              <span :id="'span-'+index" class="styled-hidden-span" ></span>
+              <!-- fullImg els will be appended when image is clicked -->
+              <template v-if="urlFullImage==image.url">
+                <full-image-els  @close="zoomOut" />   
+              </template>           
             </div>
           </template>
           <button class="styled-button" @click="getNextImage">Show More</button>
@@ -20,6 +21,7 @@
 
 <script lang="ts">
 import axios from 'axios';
+import FullImageEls from './FullImageEls.vue';
 import { defineComponent } from "vue";
 
 
@@ -42,50 +44,40 @@ export default defineComponent({
     },
   },
   components: {
-   
+    FullImageEls
   },
   data() {
     return {
-      loadedImages: [[
-        {url: 'https://images.unsplash.com/photo-1604328698692-f76ea9498e76?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODI4NDR8MHwxfHNlYXJjaHwxMXx8b2ZmaWNlfGVufDB8fHx8MTY0MDE2Nzg0MQ&ixlib=rb-1.2.1&q=80&w=1080'}, 
-      {url: 'https://images.unsplash.com/photo-1604328698692-f76ea9498e76?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODI4NDR8MHwxfHNlYXJjaHwxMXx8b2ZmaWNlfGVufDB8fHx8MTY0MDE2Nzg0MQ&ixlib=rb-1.2.1&q=80&w=1080'}, 
-      {url: 'https://images.unsplash.com/photo-1604328698692-f76ea9498e76?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODI4NDR8MHwxfHNlYXJjaHwxMXx8b2ZmaWNlfGVufDB8fHx8MTY0MDE2Nzg0MQ&ixlib=rb-1.2.1&q=80&w=1080'}, 
-      {url: 'https://images.unsplash.com/photo-1604328698692-f76ea9498e76?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODI4NDR8MHwxfHNlYXJjaHwxMXx8b2ZmaWNlfGVufDB8fHx8MTY0MDE2Nzg0MQ&ixlib=rb-1.2.1&q=80&w=1080'}, 
-      {url: 'https://images.unsplash.com/photo-1604328698692-f76ea9498e76?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODI4NDR8MHwxfHNlYXJjaHwxMXx8b2ZmaWNlfGVufDB8fHx8MTY0MDE2Nzg0MQ&ixlib=rb-1.2.1&q=80&w=1080'}, 
-      ]] as Result[][],
-      loaded: true,
+      loadedImages: [[]] as Result[][],
+      loaded: false,
       page: 1,
+      urlFullImage: '',
     }
   },
   methods: {
-    // async getImages() {
-    //   try {
-    //     this.loaded=false;
-    //     const response = await axios.get(`https://api.unsplash.com/search/photos?page=${this.page}&query=office&client_id=${process.env.VUE_APP_UNSPLASH_ACCESS_KEY}`);
-    //     let nestedResultsArr = response.data.results;
-    //     let extractedResultsArr = nestedResultsArr.map((el:Response)=>{
-    //       return {
-    //         url: el.urls.regular
-    //       }
-    //     });
-    //     extractedResultsArr.forEach((el:Result)=>{this.loadedImages.push(el)});
-    //     this.loaded=true;
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // },
+    async getImages() {
+      try {
+        this.loaded=false;
+        const response = await axios.get(`https://api.unsplash.com/search/photos?page=${this.page}&query=office&client_id=${process.env.VUE_APP_UNSPLASH_ACCESS_KEY}`);
+        let nestedResultsArr = response.data.results;
+        let extractedResultsArr = nestedResultsArr.map((el:Response)=>{
+          return {
+            url: el.urls.regular
+          }
+        });
+        this.loadedImages.push(extractedResultsArr);
+        this.loaded=true;
+      } catch (error) {
+        console.error(error);
+      }
+    },
     getNextImage() {
-      // this.page+=1;
-      // this.getImages();
-      let newArr = [];
-      newArr.push({url: 'https://images.unsplash.com/photo-1606857521015-7f9fcf423740?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODI4NDR8MHwxfHNlYXJjaHwxMnx8b2ZmaWNlfGVufDB8fHx8MTY0MDE2Nzg0MQ&ixlib=rb-1.2.1&q=80&w=1080'})
-      newArr.push({url: 'https://images.unsplash.com/photo-1606857521015-7f9fcf423740?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODI4NDR8MHwxfHNlYXJjaHwxMnx8b2ZmaWNlfGVufDB8fHx8MTY0MDE2Nzg0MQ&ixlib=rb-1.2.1&q=80&w=1080'})
-      newArr.push({url: 'https://images.unsplash.com/photo-1606857521015-7f9fcf423740?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODI4NDR8MHwxfHNlYXJjaHwxMnx8b2ZmaWNlfGVufDB8fHx8MTY0MDE2Nzg0MQ&ixlib=rb-1.2.1&q=80&w=1080'})
-      newArr.push({url: 'https://images.unsplash.com/photo-1606857521015-7f9fcf423740?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODI4NDR8MHwxfHNlYXJjaHwxMnx8b2ZmaWNlfGVufDB8fHx8MTY0MDE2Nzg0MQ&ixlib=rb-1.2.1&q=80&w=1080'})
-      this.loadedImages.push(newArr);
+      this.page+=1;
+      this.getImages();
     },
     zoomIn(event:any) {
       // select clicked div
+      console.log('zoomed in')
       const imgContainer = document.getElementById(event.currentTarget.id)!;
       // target is img, currentTarget is div
       // transform it to scale up on top of all images
@@ -101,32 +93,50 @@ export default defineComponent({
       imgContainer.classList.remove('hovered-container');
       imgContainer.classList.add('full-image');
 
+      // remove cursor pointer from img
+      const img = event.target;
+      img.style.cursor='auto';
 
       // add shade to container (span)
-      const shade = document.getElementById('span-'+event.currentTarget.id)!;
-      setTimeout(function addClass() {
-        shade.classList.add('styled-visible-span')
+      // add close button to container (button)
+      // v-if is true==> add shade and button to container
+      const clickedImgUrl = event.currentTarget.id;
+      setTimeout(()=> {
+        this.urlFullImage=clickedImgUrl;
       }, 500);
 
       // overflow hidden = scrolling locked
       document.body.style.overflow='hidden';
       document.body.scrollIntoView({behavior: "smooth"});
 
-      // add close button to container (span) --pending
+      
 
     },
     // pending logic
     zoomOut(event:any) {
-      const node = document.getElementById(event.target.id)!;
-      node.style.transform=''
-      node.style.zIndex='1';
-      // remove in style of container:_ position, top, left
-      // remove in classList of container: full-image
-      // remove in classList of span: styled-visible-span
+      console.log('zoom out')
+      
+      const imgContainer = document.getElementsByClassName('full-image')[0] as HTMLElement;
+      
+
+      imgContainer.style.position='static';
+      imgContainer.style.left='';
+      imgContainer.style.top='';
+
+      this.urlFullImage='';
+      imgContainer.classList.add('hovered-container');
+      imgContainer.classList.remove('full-image');
+
+
+      const img = imgContainer.childNodes[0] as HTMLElement;
+      img.style.cursor='pointer';
+
+      document.body.style.overflow='auto';
+      
     }
   },
   mounted() {
-    // this.getImages();
+    this.getImages();
 
   }
 });
@@ -138,8 +148,10 @@ export default defineComponent({
 @keyframes fullImage {
   0% {
     width: 24.5*1.2 * 1vw;
+    z-index: 3;
   }
   100% {
+    z-index: 3;
      width: 40vw;
     top: 50%;
     left: 50%;
@@ -165,9 +177,6 @@ export default defineComponent({
     .hovered-container {
       &:hover {
               transform: scale(1.1);
-              /* border: 1.5px solid black;
-              background: black;
-              border-radius: 6px; */
               z-index: 2;
       }
     }
@@ -187,52 +196,20 @@ export default defineComponent({
             
 
         }
-
-        .hovered-img {
-          &:hover {
-              /* transform: scale(1.2);
-              border: 3px solid black;
-              background: black; */
-              /* border-radius: 6px; */
-              /* z-index: 2; */
-            }
-        }
         
-      
         .animated {
           animation: fadeIn 1s;
           animation-fill-mode: forwards;
         }
 
-        .styled-hidden-span {
-          display: none;
-          position: absolute;
-          width: 50px;
-          height: 50px;
-          background: grey;
-          z-index: 2;
-        }
 
-        .styled-visible-span {
-          display: block;
-          z-index: -1;
-          position: absolute;
-          top: -100%;
-          left: -100%;
-          width: 200vw;
-          height: 200vh;
-          opacity: 0.7;
-          background: black;
-        }
     }
     
     .full-image {
       animation: fullImage 0.5s;
       animation-timing-function: ease-out;
-      z-index: 3;
+      z-index:3;
       animation-fill-mode: forwards;
-      /* position: absolute; */
-      
     }
 
     .styled-button {
