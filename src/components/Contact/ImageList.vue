@@ -75,10 +75,10 @@ export default defineComponent({
       this.page+=1;
       this.getImages();
     },
-    zoomIn(event:any) {
+    zoomIn(event:Event) {
       // select clicked div
-      console.log('zoomed in')
-      const imgContainer = document.getElementById(event.currentTarget.id)!;
+      const element = event.currentTarget as HTMLInputElement
+      const imgContainer = document.getElementById(element.id)!;
       // target is img, currentTarget is div
       // transform it to scale up on top of all images
       const left = imgContainer.offsetLeft;
@@ -94,13 +94,13 @@ export default defineComponent({
       imgContainer.classList.add('full-image');
 
       // remove cursor pointer from img
-      const img = event.target;
+      const img = event.target as HTMLInputElement;
       img.style.cursor='auto';
 
       // add shade to container (span)
       // add close button to container (button)
       // v-if is true==> add shade and button to container
-      const clickedImgUrl = event.currentTarget.id;
+      const clickedImgUrl = (event.currentTarget as HTMLInputElement).id;
       setTimeout(()=> {
         this.urlFullImage=clickedImgUrl;
       }, 500);
@@ -113,9 +113,8 @@ export default defineComponent({
 
     },
     // pending logic
-    zoomOut(event:any) {
-      console.log('zoom out')
-      
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    zoomOut(event:Event) {
       const imgContainer = document.getElementsByClassName('full-image')[0] as HTMLElement;
       
 

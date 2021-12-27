@@ -4,7 +4,6 @@
     <ul class="list"> 
         <li><a href="https://v3.vuejs.org/" target="_blank" rel="noopener" >Vue 3</a></li>
         <li><a href="https://www.chartjs.org/" target="_blank" rel="noopener" >ChartsJS</a></li>
-        <li><a href="https://popmotion.io/pose/learn/vue-get-started/" target="_blank" rel="noopener" >Pose for Vue</a></li>
         <li><a href="https://axios-http.com/docs/intro" target="_blank" rel="noopener" >Axios</a></li>
         <li><a href="https://next.vue-test-utils.vuejs.org/guide/" target="_blank" rel="noopener" >Vue Test Utils</a></li>
         <li><a href="https://www.cypress.io/blog/2021/04/06/getting-start-with-cypress-component-testing-vue-2-3/" target="_blank" rel="noopener" >Cypress</a></li>
