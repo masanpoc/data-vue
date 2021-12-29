@@ -1,5 +1,5 @@
 <template>
-  <form id="form">
+  <form id="form" autocomplete="on">
     
       <div id="personal">
         <h2>Personal Info</h2>
@@ -8,7 +8,7 @@
           <div class="row" id="nameInfo">
             <div >
               <label>First Name</label>
-              <input v-model="firstName" @blur="v$.firstName.$touch" :style="{width: '120px'}" :class="{'red-border': v$.firstName.$error}">
+              <input name="given-name" v-model="firstName" @blur="v$.firstName.$touch" :style="{width: '120px'}" :class="{'red-border': v$.firstName.$error}">
               <h4 v-if="v$.firstName.$error" :style="{width: '140px', 'fontSize': '0.7em', 'textAlign': 'left', color: 'red'}" >
                 Please enter a valid input
                 <template v-for="error of v$.firstName.$errors" :key="error.$uid">
@@ -19,7 +19,7 @@
 
             <div>
               <label>Last Name</label>
-              <input v-model="lastName" @blur="v$.lastName.$touch" :style="{width: '180px'}" :class="{'red-border': v$.lastName.$error}" >
+              <input name="family-name" v-model="lastName" @blur="v$.lastName.$touch" :style="{width: '180px'}" :class="{'red-border': v$.lastName.$error}" >
               <h4 v-if="v$.lastName.$error" :style="{width: '200px', 'fontSize': '0.7em', 'textAlign': 'left', color: 'red'}" >
                 Please enter a valid input.
                 <template v-for="error of v$.lastName.$errors" :key="error.$uid">
@@ -31,7 +31,7 @@
 
           <div>
             <label>Email</label>
-            <input v-model="email" @blur="v$.email.$touch" :style="{width: '180px'}" :class="{'red-border': v$.email.$error}" >
+            <input name="email" v-model="email" @blur="v$.email.$touch" :style="{width: '180px'}" :class="{'red-border': v$.email.$error}" >
             <h4 v-if="v$.email.$error" :style="{width: '200px', 'fontSize': '0.7em', 'textAlign': 'left', color: 'red'}" >
                 Please enter a valid input.
                 <template v-for="error of v$.email.$errors" :key="error.$uid">
@@ -42,7 +42,7 @@
 
           <div>
             <label>Confirm your email</label>
-            <input v-model="confirmEmail" @blur="v$.confirmEmail.$touch" :style="{width: '180px'}" :class="{'red-border': v$.confirmEmail.$error}" >
+            <input autocomplete="random"  v-model="confirmEmail" @blur="v$.confirmEmail.$touch" :style="{width: '180px'}" :class="{'red-border': v$.confirmEmail.$error}" >
             <h4 v-if="v$.confirmEmail.$error" :style="{width: '200px', 'fontSize': '0.7em', 'textAlign': 'left', color: 'red'}" >
                 Please enter a valid input.
                 <template v-for="error of v$.confirmEmail.$errors" :key="error.$uid">
@@ -53,7 +53,7 @@
         
           <div>
             <label>Phone number</label>
-            <input v-model="phoneNumber" @blur="v$.phoneNumber.$touch" :style="{width: '180px'}" :class="{'red-border': v$.phoneNumber.$error}" >
+            <input name="tel-local"  v-model="phoneNumber" @blur="v$.phoneNumber.$touch" :style="{width: '180px'}" :class="{'red-border': v$.phoneNumber.$error}" >
             <h4 v-if="v$.phoneNumber.$error" :style="{width: '200px', 'fontSize': '0.7em', 'textAlign': 'left', color: 'red'}" >
                 Please enter a valid input.
                 <template v-for="error of v$.phoneNumber.$errors" :key="error.$uid">
@@ -73,7 +73,7 @@
 
           <div>
             <label>Address</label>
-            <input v-model="address" @blur="v$.address.$touch" :style="{width: '250px'}" :class="{'red-border': v$.address.$error}" >
+            <input name="street-address" v-model="address" @blur="v$.address.$touch" :style="{width: '250px'}" :class="{'red-border': v$.address.$error}" >
             <h4 v-if="v$.address.$error" :style="{width: '270px', 'fontSize': '0.7em', 'textAlign': 'left', color: 'red'}" >
                 Please enter a valid input.
                 <template v-for="error of v$.address.$errors" :key="error.$uid">
@@ -85,7 +85,7 @@
           <div id="locationInfo" class="row">
             <div>
               <label>City</label>
-              <input v-model="city" @blur="v$.city.$touch" :style="{width: '100px'}" :class="{'red-border': v$.city.$error}">
+              <input name="address-level2" v-model="city" @blur="v$.city.$touch" :style="{width: '100px'}" :class="{'red-border': v$.city.$error}">
               <h4 v-if="v$.city.$error" :style="{width: '120px', 'fontSize': '0.7em', 'textAlign': 'left', color: 'red'}" >
                 Please enter a valid input.
                 <template v-for="error of v$.city.$errors" :key="error.$uid">
@@ -96,7 +96,7 @@
 
             <div>
               <label>Zip code</label>
-              <input v-model="zipCode" @blur="v$.zipCode.$touch" :style="{width: '70px'}" :class="{'red-border': v$.zipCode.$error}" >
+              <input name="postal-code" v-model="zipCode" @blur="v$.zipCode.$touch" :style="{width: '70px'}" :class="{'red-border': v$.zipCode.$error}" >
               <h4 v-if="v$.zipCode.$error" :style="{width: '90px', 'fontSize': '0.7em', 'textAlign': 'left', color: 'red'}" >
                 Please enter a valid input.
                 <template v-for="error of v$.zipCode.$errors" :key="error.$uid">
@@ -108,7 +108,7 @@
 
           <div>
             <label>Country</label>
-            <input v-model="country" @blur="v$.country.$touch" :style="{width: '100px'}" :class="{'red-border': v$.country.$error}" >
+            <input name="country-name" v-model="country" @blur="v$.country.$touch" :style="{width: '100px'}" :class="{'red-border': v$.country.$error}" >
             <h4 v-if="v$.country.$error" :style="{width: '120px', 'fontSize': '0.7em', 'textAlign': 'left', color: 'red'}" >
                 Please enter a valid input.
                 <template v-for="error of v$.country.$errors" :key="error.$uid">
@@ -127,7 +127,7 @@
         <div id="paymentList">
           <div>
             <label>Name on card</label>
-            <input v-model="cardName" @blur="v$.cardName.$touch" :style="{width: '250px'}" :class="{'red-border': v$.cardName.$error}" >
+            <input name="cc-name" v-model="cardName" @blur="v$.cardName.$touch" :style="{width: '250px'}" :class="{'red-border': v$.cardName.$error}" >
             <h4 v-if="v$.cardName.$error" :style="{width: '270px', 'fontSize': '0.7em', 'textAlign': 'left', color: 'red'}" >
                 Please enter a valid input.
                 <template v-for="error of v$.cardName.$errors" :key="error.$uid">
@@ -138,7 +138,7 @@
 
           <div>
             <label>Card number</label>
-            <input v-model="cardNumber" @blur="v$.cardNumber.$touch" :style="{width: '250px'}" :class="{'red-border': v$.cardNumber.$error}" >
+            <input name="cc-number" v-model="cardNumber" @blur="v$.cardNumber.$touch" :style="{width: '250px'}" :class="{'red-border': v$.cardNumber.$error}" >
             <h4 v-if="v$.cardNumber.$error" :style="{width: '270px', 'fontSize': '0.7em', 'textAlign': 'left', color: 'red'}" >
                 Please enter a valid input.
                 <template v-for="error of v$.cardNumber.$errors" :key="error.$uid">
@@ -150,7 +150,7 @@
           <div id="securityInfo" class="row">
             <div>
               <label>Expiration date</label>
-              <input v-model="cardExpiration" @blur="v$.cardExpiration.$touch" :style="{width: '100px'}" :class="{'red-border': v$.cardExpiration.$error}" >
+              <input name="cc-exp" v-model="cardExpiration" @blur="v$.cardExpiration.$touch" :style="{width: '100px'}" :class="{'red-border': v$.cardExpiration.$error}" >
               <h4 v-if="v$.cardExpiration.$error" :style="{width: '120px', 'fontSize': '0.7em', 'textAlign': 'left', color: 'red'}" >
                 Please enter a valid input.
                 <template v-for="error of v$.cardExpiration.$errors" :key="error.$uid">
@@ -161,7 +161,7 @@
 
             <div>
               <label>Security code</label>
-              <input v-model="cardCode" @blur="v$.cardCode.$touch" :style="{width: '50px'}" :class="{'red-border': v$.cardCode.$error}" >
+              <input name="cc-csc" v-model="cardCode" @blur="v$.cardCode.$touch" :style="{width: '50px'}" :class="{'red-border': v$.cardCode.$error}" >
               <h4 v-if="v$.cardCode.$error" :style="{width: '70px', 'fontSize': '0.7em', 'textAlign': 'left', color: 'red'}" >
                 Please enter a valid input.
                 <template v-for="error of v$.cardCode.$errors" :key="error.$uid">
