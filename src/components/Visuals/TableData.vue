@@ -1,82 +1,42 @@
 <template>
   <div style="max-width: 600px">
     <table>
-      <caption>Monthly Raining Days for 2021 & 2020</caption>
+      <caption>Average Monthly Raining Days for Coruña & Malaga</caption>
       <tr>
         <th>Month</th>
-        <th>2021</th>
-        <th>2020</th>
+        <th>Coruña</th>
+        <th>Málaga</th>
       </tr>
-      <tr v-for="(value, name) in tableData" :key="name">
-        <td>{{name}}</td>
-        <td>{{value[2021]}}</td>
-        <td>{{value[2020]}}</td>
+      <tr v-for="(record) in chartData" :key="record.month">
+        <td>{{record.month}}</td>
+        <td>{{record.rain_coruna}}</td>
+        <td>{{record.rain_malaga}}</td>
       </tr>
     </table>
   </div>
-</template>
+</template> 
 
-<script>
+<script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
+import {PropType} from 'vue'
+import {Rain_days} from './types';
 
-
-const myTable = {
-  January: {
-    2021: 12,
-    2020: 14
-  },
-  February: {
-    2021: 15,
-    2020: 16
-  },
-  March: {
-    2021: 14,
-    2020: 21
-  },
-  April: {
-    2021: 12,
-    2020: 10
-  },
-  May: {
-    2021: 4,
-    2020: 8
-  },
-  June: {
-    2021: 4,
-    2020: 1
-  },
-  July: {
-    2021: 2,
-    2020: 4
-  },
-  August: {
-    2021: 0,
-    2020: 0
-  },
-  September: {
-    2021: 6,
-    2020: 8
-  },
-  October: {
-    2021: 10,
-    2020: 12
-  },
-  November: {
-    2021: 8,
-    2020: 10
-  },
-  December: {
-    2021: 18,
-    2020: 14
-  },
-};
 
 export default defineComponent({
-  name: "TableData",
-  data() {
-    return {
-      tableData: myTable
+  name: "MyTableData",
+  // data() {
+  //   return {
+  //     tableData: myTable
+  //   }
+  // },
+  props: {
+    chartData: {
+      type: Object as PropType<Array<Rain_days>>,
+      required: true
     }
+  },
+  mounted() {
+    console.log(this.chartData, 'chartData')
   }
 });
 </script>

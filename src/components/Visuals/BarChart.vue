@@ -7,19 +7,28 @@
 <script>
 import Vue3ChartJs from "@j-t-mcc/vue3-chartjs";
 
+
 export default {
   name: "BarChart",
   components: {
     Vue3ChartJs,
   },
-  setup() {
+  props: {
+    chartData: {
+      required: true
+    }
+  },
+  mounted() {
+    // console.log(this.chartData.map(record=>record.avg_tmp));
+  },
+  setup(props) {
     const data = {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        labels: props.chartData.map(record=>record.month.substring(0,3)),
         datasets: [
           {
             label: "My First Dataset",
             backgroundColor: "blue",
-            data: [40, 20, 20, 30, 40, 20, 30, 20, 20, 40, 10, 40],
+            data: props.chartData.map(record=>record.avg_tmp),
           },
         ],
     };

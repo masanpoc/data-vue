@@ -1,11 +1,11 @@
 <template>
     <div id="imageList" class="info" v-if="numImages > 0 && loaded">
-          <template v-for="set of loadedImages">
-            <div :id="image.url" class="styled-img-container hovered-container" v-for="(image, index) of set" 
+          <template v-for="(set, setIndex) of loadedImages">
+            <div :id="image.url" class="styled-img-container hovered-container" v-for="(image, imageIndex) of set" 
               :key="image.url" @click="zoomIn" 
             >
               <img  :src="image.url" class="styled-img  animated"
-                :style="{animationDelay: ((index+set*10)*0.15)+'s'}" 
+                :style="{animationDelay: ((imageIndex+setIndex*10)*0.15)+'s'}" 
               
               />
               <!-- fullImg els will be appended when image is clicked -->
@@ -136,7 +136,7 @@ export default defineComponent({
   },
   mounted() {
     this.getImages();
-
+    console.log(this.numImages);
   }
 });
 </script>

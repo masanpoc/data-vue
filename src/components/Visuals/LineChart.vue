@@ -12,19 +12,24 @@ export default {
   components: {
     Vue3ChartJs,
   },
-  setup() {
+  props: {
+    chartData: {
+      required: true
+    }
+  },
+  setup(props) {
     const data = {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        labels: props.chartData.map(record=>record.month.substring(0,3)),
         datasets: [
           {
             label: "My First Dataset",
-            data: [40, 20, 20, 30, 40, 20, 30, 20, 20, 40, 30, 40],
+            data: props.chartData.map(record=>record.tmax),
             backgroundColor: 'red',
             borderColor: 'red'
           },
           {
             label: "My Second Dataset",
-            data: [20, 10, 10, 20, 10, 20, 20, 10, 10, 30, 20, 10],
+            data:  props.chartData.map(record=>record.tmin),
             backgroundColor: 'blue',
             borderColor: 'blue'
           },

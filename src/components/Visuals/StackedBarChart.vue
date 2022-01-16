@@ -6,37 +6,29 @@
 
 <script>
 import Vue3ChartJs from "@j-t-mcc/vue3-chartjs";
+import { toRefs } from 'vue'
 
 export default {
   name: "StackedBarChart",
   components: {
     Vue3ChartJs,
   },
-  setup() {
+  props: {
+    chartData: {
+      required: true
+    }
+  },
+  setup(props) {
+    const {chartData} = toRefs(props);
     const data = {
-        labels: ["2021", "2020"],
-        datasets: [
-          {
-            label: "Spring",
-            backgroundColor: 'green',
-            data: [40, 60],
-          },
-          {
-            label: "Summer",
-            backgroundColor: 'yellow',
-            data: [20, 10],
-          },
-          {
-            label: "Autumn",
-            backgroundColor: 'brown',
-            data: [40, 50],
-          },
-          {
-            label: "Winter",
-            backgroundColor: 'blue',
-            data: [100, 80],
-          },
-        ],
+        labels: [2020, 2019],
+        datasets: chartData.value.map(record=> {
+          return {
+            label: record.season,
+            backgroundColor: record.color,
+            data: [record.vol_rain_lc_2020, record.vol_rain_lc_2019]
+          }
+        })
     };
 
     const config = {
@@ -62,11 +54,11 @@ export default {
           },
           y: {
             stacked: true,
-            min: 0,
-            max: 300,
+            // min: 0,
+            // max: 300,
             ticks: {
               callback: function (value) {
-                return `${value}m3`;
+                return `${value}mm`;
               },
             },
           },
